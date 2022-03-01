@@ -1,0 +1,84 @@
+.todo-list {
+  margin: 10px auto;
+}
+
+@media screen and (min-width: 576px) {
+  .todo-list {
+    width: 576px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .todo-list {
+    width: 100%;
+  }
+}
+
+.todo-item {
+  margin: 10px 0;
+  background-color: #56a3a6;
+  border-radius: 10px;
+}
+
+.todo-item-check {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 10px 0;
+}
+
+.todo-item-date {
+  font-size: 12px;
+}
+
+.todo-item-content {
+  padding: 10px 0;
+}
+
+.todo-item-content .todo-item-date {
+  color: white;
+}
+
+.todo-item-title {
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.todo-item-delete {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.btn-delete {
+  background-color: #db504a;
+  color: white;
+}
+
+input[type="checkbox"] {
+  -webkit-filter: grayscale(80%);
+          filter: grayscale(80%);
+  cursor: pointer;
+}
+
+.btn-add {
+  background-color: #084c61;
+  color: white;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+}
+/*# sourceMappingURL=main.css.map */

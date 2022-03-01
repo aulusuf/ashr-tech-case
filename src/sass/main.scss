@@ -1,0 +1,75 @@
+$xs: 345px;
+$sm: 576px;
+$md: 768px;
+$lg: 992px;
+$xl: 1200px;
+
+$columbiaBlue: #c9f0ff;
+$azureX11: #eafffd;
+$cultured: #efeff0;
+$languidLavender: #d5cad6;
+$oldLavender: #6b5e62;
+
+$midnightGreen: #084c61;
+$cedarChest: #db504a;
+$orangeYellow: #e3b505;
+$cadet: #4f6d7a;
+$cadetBlue: #56a3a6;
+
+.todo-list {
+  margin: 10px auto;
+
+  @media screen and (min-width: $sm) {
+    width: $sm;
+  }
+  @media screen and (max-width: $md) {
+    width: 100%;
+  }
+}
+
+.todo-item {
+  margin: 10px 0;
+  background-color: $cadetBlue;
+  border-radius: 10px;
+}
+.todo-item-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0;
+}
+.todo-item-date {
+  font-size: 12px;
+}
+.todo-item-content {
+  padding: 10px 0;
+  .todo-item-date {
+    color: white;
+  }
+}
+.todo-item-title {
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.todo-item-delete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-delete {
+  background-color: $cedarChest;
+  color: white;
+}
+input[type="checkbox"] {
+  filter: grayscale(80%);
+  cursor: pointer;
+}
+
+.btn-add {
+  background-color: $midnightGreen;
+  color: white;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+}
