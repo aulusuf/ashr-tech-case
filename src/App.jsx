@@ -2,12 +2,14 @@ import "./css/main.css";
 import TodoItem from "./components/TodoItem";
 import CreateTodo from "./components/CreateTodo";
 import ReadTodo from "./components/ReadTodo";
+import DeleteTodo from "./components/DeleteTodo";
 
 function App() {
   return (
     <div className="container">
       <CreateTodo />
       <ReadTodo />
+      <DeleteTodo />
       <h1 className="text-center">ToDo List</h1>
       <div className="add-section text-center">
         <button

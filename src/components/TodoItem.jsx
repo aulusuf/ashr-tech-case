@@ -21,7 +21,11 @@ function TodoItem() {
         <div className="todo-item-title">title</div>
       </div>
       <div className="todo-item-delete col-2">
-        <button className="btn btn-delete">
+        <button
+          className="btn btn-delete"
+          data-bs-toggle="modal"
+          data-bs-target="#confDelete"
+        >
           <i className="fa fa-trash-o" />
         </button>
       </div>
