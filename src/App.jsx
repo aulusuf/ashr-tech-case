@@ -1,13 +1,24 @@
 import "./css/main.css";
 import TodoItem from "./components/TodoItem";
+import CreateTodo from "./components/CreateTodo";
+// import ReadTodo from "./components/ReadTodo";
 
 function App() {
   return (
     <div className="container">
+      <CreateTodo />
       <h1 className="text-center">ToDo List</h1>
       <div className="add-section text-center">
-        <button className="btn btn-add">Add Todo</button>
+        <button
+          type="button"
+          className="btn btn-add"
+          data-bs-toggle="modal"
+          data-bs-target="#createTodo"
+        >
+          Add Todo
+        </button>
       </div>
+
       <div className="todo-list">
         <TodoItem />
         <TodoItem />

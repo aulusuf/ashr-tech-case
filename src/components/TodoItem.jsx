@@ -10,9 +10,13 @@ function TodoItem() {
           value=""
           id="todo-check"
         />
-        <label for="todo-check" />
+        <label htmlFor="todo-check" />
       </div>
-      <div className="todo-item-content col-8">
+      <div
+        className="todo-item-content col-8"
+        data-bs-toggle="modal"
+        data-bs-target="#readTodo"
+      >
         <div className="todo-item-date">date</div>
         <div className="todo-item-title">title</div>
       </div>
