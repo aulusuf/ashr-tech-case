@@ -1,34 +1,32 @@
+import React, { createContext, useState, useMemo } from "react";
 import "./css/main.css";
-import TodoItem from "./components/TodoItem";
-import CreateTodo from "./components/CreateTodo";
-import ReadTodo from "./components/ReadTodo";
-import DeleteTodo from "./components/DeleteTodo";
+import { Routes, Route } from "react-router-dom";
+import Login from "./components/Login";
+import Todo from "./components/Todo";
+
+const session = JSON.parse(localStorage.getItem("session"));
+export const UserContext = createContext({
+  name: "",
+  token: "",
+  setName: () => {},
+  setToken: () => {},
+});
 
 function App() {
+  const [name, setName] = useState("");
+  const [token, setToken] = useState("");
+  const user = useMemo(
+    () => ({ name, token, setName, setToken }),
+    [name, token]
+  );
   return (
     <div className="container">
-      <CreateTodo />
-      <ReadTodo />
-      <DeleteTodo />
-      <h1 className="text-center">ToDo List</h1>
-      <div className="add-section text-center">
-        <button
-          type="button"
-          className="btn btn-add"
-          data-bs-toggle="modal"
-          data-bs-target="#createTodo"
-        >
-          Add Todo
-        </button>
-      </div>
-
-      <div className="todo-list">
-        <TodoItem />
-        <TodoItem />
-        <TodoItem />
-        <TodoItem />
-        <TodoItem />
-      </div>
+      <UserContext.Provider value={user}>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/todos" element={<Todo />} />
+        </Routes>
+      </UserContext.Provider>
     </div>
   );
 }
