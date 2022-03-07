@@ -6,7 +6,6 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import axios from "axios";
-// import Playground from "./components/Playground";
 
 axios.defaults.baseURL = "https://todos.data.my.id";
 

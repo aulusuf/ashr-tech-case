@@ -7,8 +7,6 @@ import Register from "./components/Register";
 
 const session = JSON.parse(localStorage.getItem("session"));
 
-// export const UserContext = createContext();
-
 function useAuth() {
   return session;
 }
