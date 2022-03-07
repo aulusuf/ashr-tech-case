@@ -98,7 +98,7 @@ function TodoListCompleted(props) {
                     borderStyle: "solid",
                     borderWidth: "thin",
                     backgroundColor: "#adb5bd",
-                    opacity: 0.7,
+                    opacity: 0.3,
                   }}
                 >
                   <div className="todo-item-check col-2">
@@ -169,7 +169,7 @@ function TodoListInactive(props) {
                     borderStyle: "solid",
                     borderWidth: "thin",
                     backgroundColor: "#adb5bd",
-                    opacity: 0.3,
+                    opacity: 0.5,
                   }}
                 >
                   <div className="todo-item-check col-2">

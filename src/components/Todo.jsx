@@ -6,6 +6,7 @@ import ReadTodo from "./ReadTodo";
 import DeleteTodo from "./DeleteTodo";
 import DoneTodo from "./DoneTodo";
 import ActiveTodo from "./ActiveTodo";
+import moment from "moment";
 import {
   TodoListActive,
   TodoListCompleted,
@@ -19,9 +20,19 @@ function Todo() {
       Authorization: `Bearer ${session.access_token}`,
     },
   };
+  const initialValue = {
+    title: "",
+    description: "",
+    start: "",
+    end: "",
+  };
   // const TodoList = createContext();
   const [error, setError] = useState("");
   const [todoList, setTodoList] = useState([]);
+  const [formTodo, setFormTodo] = useState(initialValue);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+
   const [selectedTodo, setSelectedTodo] = useState({
     id: "",
     title: "",
@@ -98,9 +109,48 @@ function Todo() {
       });
   };
 
+  const handleSubmit = () => {
+    let data = {
+      ...formTodo,
+      start: moment(startDate).format("YYYY-MM-DD 00:00:00"),
+      end: moment(endDate).format("YYYY-MM-DD 00:00:00"),
+    };
+    // console.log(data);
+    // console.log(config);
+    postAPI(data);
+    // fetchTodos();
+    // window.location.reload();
+  };
+  const postAPI = (data) => {
+    axios
+      .post("/api/todos", data, config)
+      .then((res) => {
+        fetchTodos();
+        window.location.reload();
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const handleCreate = (e) => {
+    const { name, value } = e.target;
+    setFormTodo({
+      ...formTodo,
+      [name]: value,
+    });
+  };
+
   return (
     <>
-      <CreateTodo />
+      <CreateTodo
+        submit={(e) => handleSubmit(e)}
+        change={(e) => handleCreate(e)}
+        start={(date) => setStartDate(date)}
+        end={(date) => setEndDate(date)}
+        startDate={startDate}
+        endDate={endDate}
+      />
       <ReadTodo
         data={selectedTodo}
         setData={setSelectedTodo}
@@ -135,7 +185,7 @@ function Todo() {
             data-bs-toggle="modal"
             data-bs-target="#createTodo"
           >
-            Add Todo
+            Prepare your Todo!
           </button>
         </div>
         <p>{error}</p>
@@ -144,13 +194,13 @@ function Todo() {
           <TodoListActive data={todoList} setData={setSelectedTodo} />
         </div>
         <div>
-          <p className="fw-bold mt-3 text-center">Completed</p>
-          <TodoListCompleted data={todoList} setData={setSelectedTodo} />
+          <div>
+            <p className="fw-bold mt-3 text-center">Be ready</p>
+            <TodoListInactive data={todoList} setData={setSelectedTodo} />
+          </div>
         </div>
-        <div>
-          <p className="fw-bold mt-3 text-center">Done</p>
-          <TodoListInactive data={todoList} setData={setSelectedTodo} />
-        </div>
+        <p className="fw-bold mt-3 text-center">Completed</p>
+        <TodoListCompleted data={todoList} setData={setSelectedTodo} />
       </div>
     </>
   );

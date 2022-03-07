@@ -1,55 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import moment from "moment";
-import axios from "axios";
 
-function CreateTodo() {
-  const session = JSON.parse(localStorage.getItem("session"));
-  const initialValue = {
-    title: "",
-    description: "",
-    start: "",
-    end: "",
-  };
-  const [formTodo, setFormTodo] = useState(initialValue);
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormTodo({
-      ...formTodo,
-      [name]: value,
-    });
-    console.log(formTodo);
-  };
-
-  const handleSubmit = () => {
-    let data = {
-      ...formTodo,
-      start: moment(startDate).format("YYYY-MM-DD 00:00:00"),
-      end: moment(endDate).format("YYYY-MM-DD 00:00:00"),
-    };
-    postAPI(data);
-    window.location.reload();
-  };
-  const postAPI = (data) => {
-    let config = {
-      headers: {
-        Authorization: `Bearer ${session.access_token}`,
-      },
-    };
-    axios
-      .post("/api/todos", data, config)
-      .then((res) => {
-        console.log(res.data, "success");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
+function CreateTodo(props) {
   return (
     <div className="modal fade" id="createTodo" tabIndex="-1">
       <div className="modal-dialog modal-dialog-centered">
@@ -72,7 +25,7 @@ function CreateTodo() {
                   className="form-control"
                   type="text"
                   name="title"
-                  onChange={handleChange}
+                  onChange={props.change}
                 />
               </div>
               <div className="form-group">
@@ -83,7 +36,7 @@ function CreateTodo() {
                   className="form-control"
                   type="text"
                   name="description"
-                  onChange={handleChange}
+                  onChange={props.change}
                 />
               </div>
               <div className="form-group d-flex">
@@ -94,13 +47,13 @@ function CreateTodo() {
                   <DatePicker
                     name="startDate"
                     dateFormat="yyyy-MM-dd"
-                    selected={startDate}
+                    selected={props.startDate}
                     minDate={Date.now()}
-                    startDate={startDate}
-                    endDate={endDate}
+                    startDate={props.startDate}
+                    endDate={props.endDate}
                     selectsStart
                     placeholderText="Select Start Date"
-                    onChange={(date) => setStartDate(date)}
+                    onChange={props.start}
                   />
                 </div>
                 <div>
@@ -110,13 +63,13 @@ function CreateTodo() {
                   <DatePicker
                     name="finishDate"
                     dateFormat="yyyy-MM-dd"
-                    selected={endDate}
-                    minDate={startDate}
-                    startDate={startDate}
-                    endDate={endDate}
+                    selected={props.endDate}
+                    minDate={props.startDate}
+                    startDate={props.startDate}
+                    endDate={props.endDate}
                     selectsEnd
                     placeholderText="Select Finish Date"
-                    onChange={(date) => setEndDate(date)}
+                    onChange={props.end}
                   />
                 </div>
               </div>
@@ -133,7 +86,7 @@ function CreateTodo() {
             <button
               type="button"
               className="btn btn-primary"
-              onClick={() => handleSubmit()}
+              onClick={props.submit}
               data-bs-dismiss="modal"
             >
               Understood
