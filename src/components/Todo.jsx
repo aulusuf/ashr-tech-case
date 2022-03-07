@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-// import TodoItem from "./TodoItem";
 import CreateTodo from "./CreateTodo";
 import ReadTodo from "./ReadTodo";
 import DeleteTodo from "./DeleteTodo";
@@ -81,7 +80,7 @@ function Todo() {
     console.log(selectedTodo.status);
     axios
       .patch(
-        `/api/todos/${selectedTodo.id}`,
+        `/api/todos/updatestatus/${selectedTodo.id}`,
         {
           status: "active"
             ? { status: "completed" }
