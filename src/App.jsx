@@ -4,7 +4,6 @@ import { Routes, Route } from "react-router-dom";
 import Login from "./components/Login";
 import Todo from "./components/Todo";
 
-const session = JSON.parse(localStorage.getItem("session"));
 export const UserContext = createContext({
   name: "",
   token: "",
