@@ -1,6 +1,7 @@
 import React from "react";
 
-function ReadTodo() {
+function ReadTodo(props) {
+  // console.log(props.setData);
   return (
     <div
       className="modal fade"
@@ -26,13 +27,33 @@ function ReadTodo() {
                 <label htmlFor="addTitle" className="col-sm-2 form-label">
                   Title
                 </label>
-                <input className="form-control" type="text" />
+                <input
+                  className="form-control"
+                  type="text"
+                  value={props.data.title || ""}
+                  onChange={(e) =>
+                    props.setData({
+                      ...props.data,
+                      title: e.target.value,
+                    })
+                  }
+                />
               </div>
               <div className="form-group">
                 <label htmlFor="addDesc" className="col-sm-2 form-label">
                   Description
                 </label>
-                <input className="form-control" type="text" />
+                <input
+                  className="form-control"
+                  type="text"
+                  value={props.data.description || ""}
+                  onChange={(e) =>
+                    props.setData({
+                      ...props.data,
+                      description: e.target.value,
+                    })
+                  }
+                />
               </div>
             </form>
           </div>
@@ -44,7 +65,12 @@ function ReadTodo() {
             >
               Close
             </button>
-            <button type="button" className="btn btn-primary">
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={props.edit}
+              data-bs-dismiss="modal"
+            >
               Understood
             </button>
           </div>
