@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-// import { UserContext } from "../App";
+import { useNavigate, Link } from "react-router-dom";
 
 function Register() {
   const initialValue = {
@@ -12,7 +11,7 @@ function Register() {
   };
   const [formValues, setFormValues] = useState(initialValue);
   const [formErrors, setFormErrors] = useState({});
-  // const [isSubmit, setIsSubmit] = useState(false);
+
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -24,7 +23,6 @@ function Register() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setFormErrors(validate(formValues));
-    // setIsSubmit(true);
     console.log(formErrors);
     if (formErrors === null) {
       console.log(formErrors);
@@ -131,6 +129,17 @@ function Register() {
             </button>
           </div>
         </form>
+        <div className="login text-center">
+          <p>
+            Have any account?
+            <span>
+              <br />
+              <Link to="/" className="">
+                Login instead!
+              </Link>
+            </span>
+          </p>
+        </div>
       </div>
     </>
   );
