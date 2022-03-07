@@ -26,11 +26,23 @@ $cadetBlue: #56a3a6;
     width: 100%;
   }
 }
+.login {
+  margin: 0 auto;
+}
+.login-form {
+  margin: 0 auto;
+  @media screen and (min-width: $sm) {
+    width: $sm;
+  }
+  @media screen and (max-width: $md) {
+    width: 100%;
+  }
+}
 
 .todo-item {
   margin: 10px 0;
-  background-color: $cadetBlue;
   border-radius: 10px;
+  cursor: pointer;
 }
 .todo-item-check {
   display: flex;
@@ -43,9 +55,6 @@ $cadetBlue: #56a3a6;
 }
 .todo-item-content {
   padding: 10px 0;
-  .todo-item-date {
-    color: white;
-  }
 }
 .todo-item-title {
   font-size: 18px;
@@ -67,6 +76,10 @@ input[type="checkbox"] {
 }
 
 .btn-add {
-  background-color: $midnightGreen;
+  background-color: $cadetBlue;
   color: white;
+  &:hover {
+    background-color: $midnightGreen;
+    color: white;
+  }
 }
