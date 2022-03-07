@@ -1,14 +1,13 @@
 import React from "react";
 
-function DeleteTodo() {
+function DeleteTodo(props) {
+  // console.log(props.setData);
   return (
     <div className="modal fade" id="confDelete" tabIndex="-1">
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title text-blue" id="">
-              Confirmation
-            </h5>
+            <h5 className="modal-title text-blue">Confirmation</h5>
             <button
               type="button"
               className="btn-close"
@@ -31,6 +30,7 @@ function DeleteTodo() {
                   type="button"
                   className="btn btn-danger"
                   data-bs-dismiss="modal"
+                  onClick={props.delete}
                 >
                   Delete
                 </button>

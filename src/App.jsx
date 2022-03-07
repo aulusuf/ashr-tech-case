@@ -1,34 +1,48 @@
+import React from "react";
 import "./css/main.css";
-import TodoItem from "./components/TodoItem";
-import CreateTodo from "./components/CreateTodo";
-import ReadTodo from "./components/ReadTodo";
-import DeleteTodo from "./components/DeleteTodo";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Login from "./components/Login";
+import Todo from "./components/Todo";
+import Register from "./components/Register";
+
+const session = JSON.parse(localStorage.getItem("session"));
+
+function useAuth() {
+  return session;
+}
+
+function PrivateRoute({ children }) {
+  let auth = useAuth();
+  return auth ? children : <Navigate to="/" />;
+}
+
+function PublicRoute({ children }) {
+  let auth = useAuth();
+  return auth === null ? children : <Navigate to="/todos" />;
+}
 
 function App() {
   return (
     <div className="container">
-      <CreateTodo />
-      <ReadTodo />
-      <DeleteTodo />
-      <h1 className="text-center">ToDo List</h1>
-      <div className="add-section text-center">
-        <button
-          type="button"
-          className="btn btn-add"
-          data-bs-toggle="modal"
-          data-bs-target="#createTodo"
-        >
-          Add Todo
-        </button>
-      </div>
-
-      <div className="todo-list">
-        <TodoItem />
-        <TodoItem />
-        <TodoItem />
-        <TodoItem />
-        <TodoItem />
-      </div>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/todos"
+          element={
+            <PrivateRoute>
+              <Todo />
+            </PrivateRoute>
+          }
+        />
+        <Route path="/register" element={<Register />} />
+      </Routes>
     </div>
   );
 }
