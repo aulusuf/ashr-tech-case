@@ -1,32 +1,27 @@
 import axios from "axios";
-import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { UserContext } from "../App";
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { setName, setToken } = useContext(UserContext);
 
   const fetchData = async (e) => {
     e.preventDefault();
-    console.log(email, password);
     axios
-      .post("https://todos.data.my.id/api/login", {
+      .post("/api/login", {
         email: email,
         password: password,
       })
       .then((res) => {
-        setName(res.data.data.name);
-        setToken(res.data.access_token);
         localStorage.setItem("session", JSON.stringify(res.data));
-        console.log(res.data.data.name);
-        console.log(res.data.access_token);
+        window.location.reload();
         navigate("/todos");
       })
       .catch((err) => {
-        console.log(err);
+        setError(err, "Email or password is incorrect");
       });
   };
   return (
@@ -54,8 +49,9 @@ function Login() {
             />
           </div>
           <div className="text-center mb-3">
+            <p style={{ color: "red" }}>{error}</p>
             <button type="submit" className="btn btn-primary">
-              Submit
+              Login
             </button>
           </div>
         </form>
@@ -64,9 +60,9 @@ function Login() {
             Didn't have account?
             <span>
               <br />
-              <a className="" href="#default">
+              <Link to="/register" className="">
                 Register
-              </a>
+              </Link>
             </span>
           </p>
         </div>
