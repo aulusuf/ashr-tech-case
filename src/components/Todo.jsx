@@ -13,12 +13,12 @@ import {
 } from "./TodoList";
 
 const session = JSON.parse(localStorage.getItem("session"));
-let config = {
-  headers: {
-    Authorization: `Bearer ${session.access_token}`,
-  },
-};
 function Todo() {
+  let config = {
+    headers: {
+      Authorization: `Bearer ${session.access_token}`,
+    },
+  };
   // const TodoList = createContext();
   const [error, setError] = useState("");
   const [todoList, setTodoList] = useState([]);
