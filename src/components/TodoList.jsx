@@ -110,7 +110,7 @@ function TodoListCompleted(props) {
                       checked={todo.status === "completed"}
                       onChange={() => handleUncheck(todo)}
                       data-bs-toggle="modal"
-                      data-bs-target="#checkTodo"
+                      data-bs-target="#uncheckTodo"
                     />
                     <label htmlFor="todo-check" />
                   </div>

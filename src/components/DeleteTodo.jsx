@@ -1,7 +1,6 @@
 import React from "react";
 
 function DeleteTodo(props) {
-  // console.log(props.setData);
   return (
     <div className="modal fade" id="confDelete" tabIndex="-1">
       <div className="modal-dialog">

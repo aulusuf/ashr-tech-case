@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-// import en from "date-fns/locale/en";
 import moment from "moment";
 import axios from "axios";
 
@@ -31,13 +30,11 @@ function CreateTodo() {
       ...formTodo,
       start: moment(startDate).format("YYYY-MM-DD 00:00:00"),
       end: moment(endDate).format("YYYY-MM-DD 00:00:00"),
-      status: "active",
     };
     postAPI(data);
     window.location.reload();
   };
   const postAPI = (data) => {
-    // console.log(submit);
     let config = {
       headers: {
         Authorization: `Bearer ${session.access_token}`,

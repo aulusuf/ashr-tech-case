@@ -1,7 +1,6 @@
 import React from "react";
 
 function ReadTodo(props) {
-  // console.log(props.setData);
   return (
     <div
       className="modal fade"

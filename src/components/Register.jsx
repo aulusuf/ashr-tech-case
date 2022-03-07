@@ -69,7 +69,6 @@ function Register() {
   return (
     <>
       <h1 className="text-center mt-5">ToDo List</h1>
-      {/* <pre>{JSON.stringify(formValues, undefined, 2)}</pre> */}
       <div className="login">
         <form className="login-form" onSubmit={handleSubmit}>
           <div className="mb-3">

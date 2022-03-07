@@ -1,8 +1,8 @@
 import React from "react";
 
-function DoneTodo(props) {
+function ActiveTodo(props) {
   return (
-    <div className="modal fade" id="checkTodo" tabIndex="-1">
+    <div className="modal fade" id="uncheckTodo" tabIndex="-1">
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
@@ -16,7 +16,7 @@ function DoneTodo(props) {
           </div>
           <div className="modal-body">
             <form>
-              <p>Are you sure have done this?</p>
+              <p>Are you sure activating this todo?</p>
               <div className="modal-footer">
                 <button
                   type="button"
@@ -29,7 +29,7 @@ function DoneTodo(props) {
                   type="button"
                   className="btn btn-success"
                   data-bs-dismiss="modal"
-                  onClick={props.check}
+                  onClick={props.uncheck}
                 >
                   Sure!
                 </button>
@@ -42,4 +42,4 @@ function DoneTodo(props) {
   );
 }
 
-export default DoneTodo;
+export default ActiveTodo;

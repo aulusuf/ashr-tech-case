@@ -5,6 +5,7 @@ import CreateTodo from "./CreateTodo";
 import ReadTodo from "./ReadTodo";
 import DeleteTodo from "./DeleteTodo";
 import DoneTodo from "./DoneTodo";
+import ActiveTodo from "./ActiveTodo";
 import {
   TodoListActive,
   TodoListCompleted,
@@ -70,28 +71,29 @@ function Todo() {
   };
   const doneTodo = (e) => {
     e.preventDefault();
-    console.log(selectedTodo.status);
-    if (selectedTodo.status === "active") {
-      selectedTodo.status = "completed";
-    } else if (selectedTodo.status === "completed") {
-      selectedTodo.status = "active";
-    }
-
-    console.log(selectedTodo.status);
     axios
       .patch(
         `/api/todos/updatestatus/${selectedTodo.id}`,
         {
-          status: "active"
-            ? { status: "completed" }
-            : { status: "completed" }
-            ? { status: "active" }
-            : null,
+          status: "completed",
         },
         config
       )
-      .then((res) => {
-        console.log(res);
+      .then(() => {
+        fetchTodos();
+      });
+  };
+  const undoneTodo = (e) => {
+    e.preventDefault();
+    axios
+      .patch(
+        `/api/todos/updatestatus/${selectedTodo.id}`,
+        {
+          status: "active",
+        },
+        config
+      )
+      .then(() => {
         fetchTodos();
       });
   };
@@ -106,6 +108,7 @@ function Todo() {
       />
       <DeleteTodo setData={selectedTodo} delete={(e) => deleteTodo(e)} />
       <DoneTodo setData={selectedTodo} check={(e) => doneTodo(e)} />
+      <ActiveTodo setData={selectedTodo} uncheck={(e) => undoneTodo(e)} />
       <div
         className="bg-light py-1"
         style={{
