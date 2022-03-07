@@ -20,8 +20,9 @@ function Login() {
         window.location.reload();
         navigate("/todos");
       })
-      .catch((err) => {
-        setError(err, "Email or password is incorrect");
+      .catch(() => {
+        setError("username atau password salah!");
+        navigate("/");
       });
   };
   return (
