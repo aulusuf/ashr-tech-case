@@ -1,78 +1,156 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import TodoItem from "./TodoItem";
+// import TodoItem from "./TodoItem";
 import CreateTodo from "./CreateTodo";
 import ReadTodo from "./ReadTodo";
 import DeleteTodo from "./DeleteTodo";
+import DoneTodo from "./DoneTodo";
+import {
+  TodoListActive,
+  TodoListCompleted,
+  TodoListInactive,
+} from "./TodoList";
 
+const session = JSON.parse(localStorage.getItem("session"));
+let config = {
+  headers: {
+    Authorization: `Bearer ${session.access_token}`,
+  },
+};
 function Todo() {
+  // const TodoList = createContext();
+  const [error, setError] = useState("");
   const [todoList, setTodoList] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [selectedTodo, setSelectedTodo] = useState({
+    id: "",
+    title: "",
+    description: "",
+    status: "",
+    created_at: "",
+    updated_at: "",
+  });
+  // const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
   useEffect(() => {
     fetchTodos();
   }, []);
-  const fetchTodos = async () => {
-    const session = JSON.parse(localStorage.getItem("session"));
 
-    console.log();
-    let config = {
-      headers: {
-        Authorization: `Bearer ${session.access_token}`,
-      },
-    };
+  const fetchTodos = async () => {
     axios
-      .get("https://todos.data.my.id/api/todos", config)
+      .get("/api/todos", config)
       .then((res) => {
-        setLoading(false);
         setTodoList(res.data.data);
-        console.log(res.data.data);
       })
       .catch((err) => {
-        console.log(err);
+        setError(err);
       });
   };
 
   const logout = () => {
     localStorage.removeItem("session");
-    // window.location.reload();
+    localStorage.removeItem("token");
+    window.location.reload();
     navigate("/");
   };
+
+  const editTodo = (e) => {
+    e.preventDefault();
+    axios
+      .patch(`/api/todos/${selectedTodo.id}`, selectedTodo, config)
+      .then(() => {
+        fetchTodos();
+      });
+  };
+  const deleteTodo = (e) => {
+    e.preventDefault();
+    axios.delete(`/api/todos/${selectedTodo.id}`, config).then(() => {
+      fetchTodos();
+    });
+  };
+  const doneTodo = (e) => {
+    e.preventDefault();
+    console.log(selectedTodo.status);
+    if (selectedTodo.status === "active") {
+      selectedTodo.status = "completed";
+    } else if (selectedTodo.status === "completed") {
+      selectedTodo.status = "active";
+    }
+
+    console.log(selectedTodo.status);
+    axios
+      .patch(
+        `/api/todos/${selectedTodo.id}`,
+        {
+          status: "active"
+            ? { status: "completed" }
+            : { status: "completed" }
+            ? { status: "active" }
+            : null,
+        },
+        config
+      )
+      .then((res) => {
+        console.log(res);
+        fetchTodos();
+      });
+  };
+
   return (
-    <div>
-      <div>
-        <button type="button" onClick={logout}>
+    <>
+      <CreateTodo />
+      <ReadTodo
+        data={selectedTodo}
+        setData={setSelectedTodo}
+        edit={(e) => editTodo(e)}
+      />
+      <DeleteTodo setData={selectedTodo} delete={(e) => deleteTodo(e)} />
+      <DoneTodo setData={selectedTodo} check={(e) => doneTodo(e)} />
+      <div
+        className="bg-light py-1"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <p className="me-2" style={{ margin: "auto 0", fontWeight: "bold" }}>
+          {session.data.name}
+        </p>
+        <button type="button" onClick={logout} className="btn btn-danger">
           Logout
         </button>
       </div>
-      <CreateTodo />
-      <ReadTodo />
-      <DeleteTodo />
+
       <h1 className="text-center mt-5">ToDo List</h1>
 
-      <div className="add-section text-center">
-        <button
-          type="button"
-          className="btn btn-add"
-          data-bs-toggle="modal"
-          data-bs-target="#createTodo"
-        >
-          Add Todo
-        </button>
-      </div>
       <div className="todo-list">
-        {loading ? (
-          <p>Loading...</p>
-        ) : todoList ? (
-          todoList.map((todo) => {
-            return <TodoItem data={todo} key={todo.id} />;
-          })
-        ) : (
-          <p>Create your todo</p>
-        )}
+        <div className="todo-item row">
+          {" "}
+          <button
+            type="button"
+            className="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#createTodo"
+          >
+            Add Todo
+          </button>
+        </div>
+        <p>{error}</p>
+        <div>
+          <p className="fw-bold mt-3 text-center">On Going</p>
+          <TodoListActive data={todoList} setData={setSelectedTodo} />
+        </div>
+        <div>
+          <p className="fw-bold mt-3 text-center">Completed</p>
+          <TodoListCompleted data={todoList} setData={setSelectedTodo} />
+        </div>
+        <div>
+          <p className="fw-bold mt-3 text-center">Done</p>
+          <TodoListInactive data={todoList} setData={setSelectedTodo} />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
