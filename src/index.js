@@ -12,6 +12,7 @@ axios.defaults.baseURL = "https://todos.data.my.id";
 ReactDOM.render(
   <BrowserRouter>
     <App />
+    {/* <Playground /> */}
   </BrowserRouter>,
   document.getElementById("root")
 );
